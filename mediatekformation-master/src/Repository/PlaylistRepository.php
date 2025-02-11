@@ -31,8 +31,8 @@ class PlaylistRepository extends ServiceEntityRepository
     
     /**
      * Retourne toutes les playlists triées sur le nom de la playlist
-     * @param String $champ
-     * @param String $ordre
+     * @param string $champ
+     * @param string $ordre
      * @return Playlist[]
      */
     public function findAllOrderByName(string $ordre): array{
@@ -47,20 +47,24 @@ class PlaylistRepository extends ServiceEntityRepository
     /**
      * Enregistrements dont un champ contient une valeur
      * ou tous les enregistrements si la valeur est vide
-     * @param String  $champ
-     * @param int $valeur
+     * @param string $champ
+     * @param mixed $valeur
      * @param string $table si $champ dans une autre table
      * @return Playlist[]
      */
-    public function findByContainValue(string $champ, int $valeur, string $table=""): array{
-        if($valeur==""){
+    public function findByContainValue(string $champ, mixed $valeur, string $table=""): array{
+        if($valeur===""){
             return $this->findAllOrderByName('ASC');
         }
+        
+        // Convert value to string for LIKE query
+        $searchValue = (string) $valeur;
+        
         if($table==""){
             return $this->createQueryBuilder('p')
                     ->leftjoin('p.formations', 'f')
                     ->where('p.'.$champ.' LIKE :valeur')
-                    ->setParameter('valeur', '%'.$valeur.'%')
+                    ->setParameter('valeur', '%'.$searchValue.'%')
                     ->groupBy('p.id')
                     ->orderBy('p.name', 'ASC')
                     ->getQuery()
@@ -70,12 +74,28 @@ class PlaylistRepository extends ServiceEntityRepository
                     ->leftjoin('p.formations', 'f')
                     ->leftjoin('f.categories', 'c')
                     ->where('c.'.$champ.' LIKE :valeur')
-                    ->setParameter('valeur', '%'.$valeur.'%')
+                    ->setParameter('valeur', '%'.$searchValue.'%')
                     ->groupBy('p.id')
                     ->orderBy('p.name', 'ASC')
                     ->getQuery()
                     ->getResult();
         }
     }
+
+    /**
+     * Recupere le nombre de formation par playlist et retourne toutes les playlists triées sur le nombre  de formation
+     * @param string $ordre
+     * @return Playlist[]
+     */
+    public function findAllOrderByFormationCount(string $ordre): array {
+        return $this->createQueryBuilder('p')
+            ->select('p as playlist', 'COUNT(f.id) as formationCount')
+            ->leftjoin('p.formations', 'f')
+            ->groupBy('p.id')
+            ->orderBy('formationCount', $ordre)
+            ->getQuery()
+            ->getResult();
+    }
+
     
 }

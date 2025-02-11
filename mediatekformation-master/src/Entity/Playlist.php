@@ -70,6 +70,7 @@ class Playlist
         return $this->formations;
     }
 
+
     public function addFormation(Formation $formation): static
     {
         if (!$this->formations->contains($formation)) {

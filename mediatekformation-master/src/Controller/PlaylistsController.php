@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Repository\CategorieRepository;
 use App\Repository\FormationRepository;
 use App\Repository\PlaylistRepository;
+use Error;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,6 +51,7 @@ class PlaylistsController extends AbstractController {
      */
     #[Route('/playlists', name: 'playlists')]
     public function index(): Response{
+
         $playlists = $this->playlistRepository->findAllOrderByName('ASC');
         $categories = $this->categorieRepository->findAll();
         return $this->render("pages/playlists.html.twig", [
@@ -59,9 +62,16 @@ class PlaylistsController extends AbstractController {
 
     #[Route('/playlists/tri/{champ}/{ordre}', name: 'playlists.sort')]
     public function sort($champ, $ordre): Response{
-        $playlists = null;
-        if($champ == "name"){
+        switch ($champ) {
+            case 'name':
                 $playlists = $this->playlistRepository->findAllOrderByName($ordre);
+                break;
+            case 'formationCount':
+                $playlists = $this->playlistRepository->findAllOrderByFormationCount($ordre);
+                break;
+            default:
+                error_log('Erreur dans le tri des playlists');
+                break;
         }
         $categories = $this->categorieRepository->findAll();
         return $this->render("pages/playlists.html.twig", [
@@ -70,9 +80,16 @@ class PlaylistsController extends AbstractController {
         ]);
     }
 
+
+
     #[Route('/playlists/recherche/{champ}/{table}', name: 'playlists.findallcontain')]
     public function findAllContain($champ, Request $request, $table=""): Response{
         $valeur = $request->get("recherche");
+        if ($champ == 'id') {
+            $valeur = (int) $valeur;
+        } else {
+            $valeur = (string) $valeur;
+        }
         $playlists = $this->playlistRepository->findByContainValue($champ, $valeur, $table);
         $categories = $this->categorieRepository->findAll();
         return $this->render("pages/playlists.html.twig", [

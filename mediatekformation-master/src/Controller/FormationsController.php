@@ -16,18 +16,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class FormationsController extends AbstractController {
 
     /**
-     * 
+     *
      * @var FormationRepository
      */
-    private $formationRepository;
+    private FormationRepository $formationRepository;
     
     /**
-     * 
+     *
      * @var CategorieRepository
      */
-    private $categorieRepository;
+    private CategorieRepository $categorieRepository;
     
-    function __construct(FormationRepository $formationRepository, CategorieRepository $categorieRepository) {
+    public function __construct(FormationRepository $formationRepository, CategorieRepository $categorieRepository) {
         $this->formationRepository = $formationRepository;
         $this->categorieRepository= $categorieRepository;
     }
@@ -50,7 +50,7 @@ class FormationsController extends AbstractController {
             'formations' => $formations,
             'categories' => $categories
         ]);
-    }     
+    }
 
     #[Route('/formations/recherche/{champ}/{table}', name: 'formations.findallcontain')]
     public function findAllContain($champ, Request $request, $table=""): Response{
@@ -63,14 +63,14 @@ class FormationsController extends AbstractController {
             'valeur' => $valeur,
             'table' => $table
         ]);
-    }  
+    }
 
     #[Route('/formations/formation/{id}', name: 'formations.showone')]
     public function showOne($id): Response{
         $formation = $this->formationRepository->find($id);
         return $this->render("pages/formation.html.twig", [
             'formation' => $formation
-        ]);        
-    }   
+        ]);
+    }
     
 }

@@ -19,8 +19,7 @@ framework:
         log: true
 
     router:
-        host: 'localhost'
-        port: '8002'
+        http_port: 8080
 
 when@test:
     framework:

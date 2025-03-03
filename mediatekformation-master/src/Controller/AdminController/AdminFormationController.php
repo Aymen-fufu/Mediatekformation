@@ -101,7 +101,7 @@ class AdminFormationController extends AbstractController
         $formFormation = $this->createForm(FormationType::class, $formation);
         $formFormation->handleRequest($request);
 
-        if ($formFormation->isSubmitted() && $formFormation->isValid()) 
+        if ($formFormation->isSubmitted() && $formFormation->isValid())
         {
             $this-> formationRepository->add($formation);
             return $this->redirectToRoute(self::RETOURNEADMININFORMATION);

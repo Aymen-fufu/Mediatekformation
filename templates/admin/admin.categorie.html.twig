@@ -1,0 +1,33 @@
+{% extends "baseadmin.html.twig" %}
+
+{% block body %}
+
+<form class="form-inline mt-1" method="POST" action="{{ path('admin.categorie.add') }}">
+    <div class="form-group mr-1 mb-2">
+        <input type="text" class="sm" name="name">
+        <button type="submit" class="btn btn-primary mb-2 btn-sm">Ajouter</button>
+    </div>
+</form>
+     <tabble class="table table-stripped">
+        <caption></caption>
+            <thead>
+                <tr>
+                    <th> Nom des categories :</th>
+                </tr>
+            </thead>
+            <tbody>
+                <div class="form-group mr-1 mb-2">
+                    {% for categorie in categories %}
+                        <tr>
+                            <td>{{ categorie.name }}</td>
+                            <td class="text-end">
+                            {% if categorie.formations|length == 0 %}
+                                <a href="{{ path('admin.categorie.delete', {'id': categorie.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                            {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </div>
+            </tbody>
+    </tabble>
+{% endblock %}

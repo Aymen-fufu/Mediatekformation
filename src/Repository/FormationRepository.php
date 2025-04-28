@@ -35,19 +35,19 @@ class FormationRepository extends ServiceEntityRepository
      * @param array $table si $champ dans une autre table
      * @return Formation[]
      */
-    public function findAllOrderBy($champ, $ordre, $table=""): array{
-        if($table==""){
+    public function findAllOrderBy($champ, $ordre): array
+    {
+        if($champ === "name"){
             return $this->createQueryBuilder('f')
-                    ->orderBy('f.'.$champ, $ordre)
-                    ->getQuery()
-                    ->getResult();
-        }else{
-            return $this->createQueryBuilder('f')
-                    ->join('f.'.$table, 't')
-                    ->orderBy('t.'.$champ, $ordre)
-                    ->getQuery()
-                    ->getResult();
+                ->leftJoin('f.playlist', 'p')
+                ->orderBy('p.name', $ordre)
+                ->getQuery()
+                ->getResult();
         }
+        return $this->createQueryBuilder('f')
+            ->orderBy('f.'.$champ, $ordre)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -104,6 +104,20 @@ class FormationRepository extends ServiceEntityRepository
                 ->where('p.id=:id')
                 ->setParameter('id', $idPlaylist)
                 ->orderBy('f.publishedAt', 'ASC')
+                ->getQuery()
+                ->getResult();
+    }
+
+    /**
+     * Retourne la liste des formations d'une playlist
+     * @param string $champ
+     * @param string $ordre
+     * @return array
+     */
+    public function findAllOrderByPlaylist($champ, $ordre): array{
+        return $this->createQueryBuilder('f')
+                ->join('f.playlist', 'p')
+                ->orderBy('p.'.$champ, $ordre)
                 ->getQuery()
                 ->getResult();
     }

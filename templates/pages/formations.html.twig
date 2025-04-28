@@ -4,8 +4,8 @@
         <thead>
             <tr>
                 <th class="text-left align-top" scope="col">formation<br/>
-                    <button class="btn btn-info btn-sm active" aria-pressed="true" onclick="window.location.href='{{ path('formations.sort', {champ:'publishedAt', ordre:'ASC'}) }}'"><</button>
-                    <button class="btn btn-info btn-sm active" aria-pressed="true" onclick="window.location.href='{{ path('formations.sort', {champ:'publishedAt', ordre:'DESC'}) }}'">></button>
+                    <button class="btn btn-info btn-sm active" aria-pressed="true" onclick="window.location.href='{{ path('formations.sort', {champ:'title', ordre:'ASC'}) }}'"><</button>
+                    <button class="btn btn-info btn-sm active" aria-pressed="true" onclick="window.location.href='{{ path('formations.sort', {champ:'title', ordre:'DESC'}) }}'">></button>
                     <form class="form-inline mt-1" method="POST" action="{{ path('formations.findallcontain', {champ:'title'}) }}">
                         <div class="form-group mr-1 mb-2">
                             <input type="text" class="sm" name="recherche" 
@@ -16,8 +16,8 @@
                     </form>                    
                 </th>
                 <th class="text-left align-top" scope="col"> playlist<br />
-<!-- corigger ca--> <button class="btn btn-info btn-sm active" aria-pressed="true" onclick="window.location.href='{{ path('playlists.sort', {champ:'title', ordre:'ASC'}) }}'"><</button>
-<!-- corigger ca--> <button class="btn btn-info btn-sm active" aria-pressed="true" onclick="window.location.href='{{ path('playlists.sort', {champ:'title', ordre:'DESC'}) }}'">></button>
+    <button class="btn btn-info btn-sm active" aria-pressed="true" onclick="window.location.href='{{ path('formations.sort', {champ:'name', ordre:'ASC'}) }}'"><</button>
+    <button class="btn btn-info btn-sm active" aria-pressed="true" onclick="window.location.href='{{ path('formations.sort', {champ:'name', ordre:'DESC'}) }}'">></button>
                     <form class="form-inline mt-1" method="POST" action="{{ path('formations.findallcontain', {champ:'name', table:'playlist'}) }}">
                         <div class="form-group mr-1 mb-2">
                             <input type="text" class="sm" name="recherche"

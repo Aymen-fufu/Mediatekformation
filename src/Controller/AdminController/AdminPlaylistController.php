@@ -48,26 +48,28 @@ class AdminPlaylistController extends AbstractController
     }
 
     /**
-     * @Route("/admin/playlists", name="admin_playlists")
-     * @param Request $request 
+     * @Route("/admin/playlists", name="admin.playlists")
+     * @param Request $request
      * @return Response
      */
 
+    #[Route('/admin/playlists', name: 'admin.playlists')]
     public function index(Request $request): Response
     {
         $playlists = $this->playlistRepository->findAll();
         $categories = $this->categorieRepository->findAll();
-        return $this->render("admin/adminplaylists.html.twig", [
+        return $this->render("admin/admin.playlists.html.twig", [
             'playlists' => $playlists,
             'categories' => $categories
         ]);
     }
 
     /**
-     * @Route("/admin/playlists/ajouter", name="admin_playlists_ajouter")
-     * @param Request $request 
+     * @Route("/admin/playlists/ajouter", name="admin.playlists.sort")
+     * @param Request $request
      * @return Response
      */
+    #[Route('/admin/playlists/ajouter', name: 'admin.playlists.sort')]
     public function sort($champ, $ordre): Response
     {
         switch ($champ) {
@@ -89,11 +91,11 @@ class AdminPlaylistController extends AbstractController
     }
 
     /**
-     * @Route("/admin/playlists/recherche/{champ}/{table}", name="admin_playlists_findallcontain")
-     * @param Request $request 
+     * @Route("/admin/playlists/recherche/{champ}/{table}", name="admin.playlists.findallcontain")
+     * @param Request $request
      * @return Response
      */
-
+    #[Route('/admin/playlist/recherche/{champ}/{table}', name: 'admin.playlists.findallcontain')]
     public function findAllContain($champ, Request $request, $table=""): Response
     {
         $valeur = $request->get("recherche");
@@ -113,11 +115,11 @@ class AdminPlaylistController extends AbstractController
     }
 
     /**
-     * @Route("/admin/playlists/playlist/{id}", name="admin_playlists_add")
-     * @param Request $request 
+     * @Route("/admin/playlist/add{", name="admin.playlists.add")
+     * @param Request $request
      * @return Response
      */
-
+    #[Route('/admin/playlist/add', name: 'admin.playlists.add')]
     public function add(Request $request): Response
     {
         $playlist = new Playlist();
@@ -136,11 +138,12 @@ class AdminPlaylistController extends AbstractController
     }
 
     /**
-     * @Route("/admin/playlists/playlist/{id}/modifier", name="admin_playlists_edit")
-     * @param Request $request 
-     * @param int $id 
+     * @Route("/admin/playlist/edit/{id}", name="admin.playlists.edit")
+     * @param Request $request
+     * @param int $id
      * @return Response
      */
+    #[Route('/admin/playlist/edit/{id}', name: 'admin.playlists.edit')]
     public function edit(Request $request, Playlist $playlist): Response
     {
         $formPlaylist = $this->createForm(PlaylistType::class, $playlist);
@@ -158,10 +161,11 @@ class AdminPlaylistController extends AbstractController
     }
 
     /**
-     * @Route("/admin/playlists/playlist/{id}/supprimer", name="admin_playlists_delete")
-     * @param Request $request 
+     * @Route("/admin/playlists/playlist/{id}/supprimer", name="admin.playlists.delete")
+     * @param Request $request
      * @return Response
      */
+    #[Route('/admin/playlist/delete/{id}', name: 'admin.playlists.delete')]
     public function delete(Request $request, Playlist $playlist): Response
     {
         $this->playlistRepository->remove($playlist);

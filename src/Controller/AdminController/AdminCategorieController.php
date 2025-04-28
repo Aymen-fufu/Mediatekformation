@@ -44,39 +44,47 @@ class AdminCategorieController extends AbstractController
     }
 
     /**
-     * @Route("/admin/categories", name="admin_categories")
+     * @Route("/admin/categories", name="admin.categories")
      * @param Request $request
      * @return Response
      */
+    #[Route('/admin/categories', name: 'admin.categories')]
     public function index(Request $request): Response
     {
         $categories = $this->categorieRepository->findAll();
-        return $this->render("admin/admincategories.html.twig", [
+        return $this->render("admin/admin.categories.html.twig", [
             'categories' => $categories,
             
         ]);
     }
 
     /**
-     * @Route("/admin/categories/add", name="admin_categories_add")
+     * @Route("/admin/categories/add", name="admin.categories.add")
      * @param Request $request
      * @return Response
      */
+    #[Route('/admin/categories/add', name: 'admin.categories.add')]
     public function add(Request $request): Response
     {
         $categorie = new Categorie();
         $name = $request->request->get('name');
         $categorie->setName($name);
         $this->categorieRepository->add($categorie, true);
-        return $this->redirectToRoute('admin_categories');
+        return $this->redirectToRoute('admin.categories');
     }
 
-    
-    public function delete (Categorie $categorie): Response
+    /**
+     * @Route("/admin/categories/delete/{id}", name="admin.categories.delete")
+     * @param Request $request
+     * @param Categorie $categorie
+     * @return Response
+     */
+    #[Route('/admin/categories/delete/{id}', name: 'admin.categories.delete')]
+    public function delete(Categorie $categorie): Response
     {
         
-        $this->categorieRepository->delete($categorie, true);
-        return $this->redirectToRoute('admin_categories');
+        $this->categorieRepository->remove($categorie, true);
+        return $this->redirectToRoute('admin.categories');
     }
 
 

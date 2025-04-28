@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<form class="form-inline mt-1" method="POST" action="{{ path('admin.categorie.add') }}">
+<form class="form-inline mt-1" method="POST" action="{{ path('admin.categories.add') }}">
     <div class="form-group mr-1 mb-2">
         <input type="text" class="sm" name="name">
         <button type="submit" class="btn btn-primary mb-2 btn-sm">Ajouter</button>
@@ -21,9 +21,9 @@
                         <tr>
                             <td>{{ categorie.name }}</td>
                             <td class="text-end">
-                            {% if categorie.formations|length == 0 %}
-                                <a href="{{ path('admin.categorie.delete', {'id': categorie.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
-                            {% endif %}
+                            <form action="{{ path('admin.categories.delete', {'id': categorie.id}) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cette catégorie ?');">
+                                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                            </form>
                             </td>
                         </tr>
                     {% endfor %}

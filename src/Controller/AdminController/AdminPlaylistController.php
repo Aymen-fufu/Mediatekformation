@@ -167,7 +167,7 @@ class AdminPlaylistController extends AbstractController
     }
 
     /**
-     * @Route("/admin/playlists/playlist/{id}/supprimer", name="admin.playlists.delete")
+     * @Route("/admin/playlists/playlist/{id}/delete", name="admin.playlists.delete")
      * @param Request $request
      * @return Response
      */

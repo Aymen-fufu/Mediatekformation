@@ -11,11 +11,21 @@ class UserFixture extends Fixture
 {
     private $passwordHasher;
 
+    /**
+     * UserFixture constructor.
+     *
+     * @param UserPasswordHasherInterface $passwordHasher
+     */
     public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
         $this->passwordHasher = $passwordHasher;
     }
 
+    /**
+     * Load data fixtures with the passed EntityManager
+     *
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $user = new User();

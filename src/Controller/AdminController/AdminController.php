@@ -26,6 +26,10 @@ class AdminController extends AbstractController{
         $this->repository = $repository;
     }
     
+    /**
+     * @Route("/admin", name="admin")
+     * @return Response
+     */
     #[Route('/admin', name: 'admin')]
     public function index(): Response{
         $formations = $this->repository->findAllLasted(2);
@@ -34,6 +38,10 @@ class AdminController extends AbstractController{
         ]);
     }
     
+    /**
+     * @Route("/cgu", name="cgu")
+     * @return Response
+     */
     #[Route('/cgu', name: 'cgu')]
     public function cgu(): Response{
         return $this->render("pages/cgu.html.twig");

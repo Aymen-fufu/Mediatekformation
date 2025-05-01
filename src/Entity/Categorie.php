@@ -38,7 +38,7 @@ class Categorie
     {
         return $this->name;
     }
-
+    
     public function setName(?string $name): static
     {
         $this->name = $name;
@@ -54,6 +54,9 @@ class Categorie
         return $this->formations;
     }
 
+    /**
+     * @param Collection<int, Formation> $formations
+     */
     public function addFormation(Formation $formation): static
     {
         if (!$this->formations->contains($formation)) {
@@ -64,6 +67,9 @@ class Categorie
         return $this;
     }
 
+    /**
+     * @param Collection<int, Formation> $formations
+     */
     public function removeFormation(Formation $formation): static
     {
         if ($this->formations->removeElement($formation)) {

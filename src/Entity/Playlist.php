@@ -70,7 +70,9 @@ class Playlist
         return $this->formations;
     }
 
-
+    /**
+     * @param Formation $formation
+     */
     public function addFormation(Formation $formation): static
     {
         if (!$this->formations->contains($formation)) {
@@ -81,6 +83,9 @@ class Playlist
         return $this;
     }
 
+    /**
+     * @param Formation $formation
+     */
     public function removeFormation(Formation $formation): static
     {
         if ($this->formations->removeElement($formation)) {

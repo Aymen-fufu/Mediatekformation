@@ -27,11 +27,19 @@ class FormationsController extends AbstractController {
      */
     private CategorieRepository $categorieRepository;
     
+    /**
+     * @param FormationRepository $formationRepository
+     * @param CategorieRepository $categorieRepository
+     */
     public function __construct(FormationRepository $formationRepository, CategorieRepository $categorieRepository) {
         $this->formationRepository = $formationRepository;
         $this->categorieRepository= $categorieRepository;
     }
     
+    /**
+     * Affiche la liste des formations
+     * @return Response
+     */
     #[Route('/formations', name: 'formations')]
     public function index(): Response{
         $formations = $this->formationRepository->findAll();
@@ -42,6 +50,11 @@ class FormationsController extends AbstractController {
         ]);
     }
 
+    /**
+     * tri les les formations
+     * @param int $id
+     * @return Response
+     */
     #[Route('/formations/tri/{champ}/{ordre}/{table}', name: 'formations.sort')]
     public function sort($champ, $ordre, $table=""): Response{
         $formations = $this->formationRepository->findAllOrderBy($champ, $ordre, $table);
@@ -52,6 +65,13 @@ class FormationsController extends AbstractController {
         ]);
     }
 
+    /**
+     * Recherche de formations
+     * @param string $champ
+     * @param Request $request
+     * @param string $table
+     * @return Response
+     */
     #[Route('/formations/recherche/{champ}/{table}', name: 'formations.findallcontain')]
     public function findAllContain($champ, Request $request, $table=""): Response{
         $valeur = $request->get("recherche");
@@ -65,6 +85,11 @@ class FormationsController extends AbstractController {
         ]);
     }
 
+    /**
+     * Affiche une formation
+     * @param int $id
+     * @return Response
+     */
     #[Route('/formations/formation/{id}', name: 'formations.showone')]
     public function showOne($id): Response{
         $formation = $this->formationRepository->find($id);

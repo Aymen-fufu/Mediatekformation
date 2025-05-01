@@ -8,6 +8,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategorieType extends AbstractType
 {
+    /**
+     * Builds the form for the Categorie entity.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array $options The options for the form
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -17,6 +23,11 @@ class CategorieType extends AbstractType
         ;
     }
 
+    /**
+     * Configures the options for the form.
+     *
+     * @param OptionsResolver $resolver The options resolver
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

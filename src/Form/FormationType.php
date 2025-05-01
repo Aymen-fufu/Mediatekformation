@@ -22,6 +22,12 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class FormationType extends AbstractType
 {
+    /**
+     * Summary of buildForm
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -65,7 +71,6 @@ class FormationType extends AbstractType
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      * @return void
      */
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

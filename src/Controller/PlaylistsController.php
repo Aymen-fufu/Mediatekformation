@@ -37,6 +37,12 @@ class PlaylistsController extends AbstractController {
      */
     private CategorieRepository $categorieRepository;
 
+    /**
+     * PlaylistsController constructor.
+     * @param PlaylistRepository $playlistRepository
+     * @param CategorieRepository $categorieRepository
+     * @param FormationRepository $formationRespository
+     */
     public function __construct(PlaylistRepository $playlistRepository,
             CategorieRepository $categorieRepository,
             FormationRepository $formationRespository) {
@@ -60,6 +66,12 @@ class PlaylistsController extends AbstractController {
         ]);
     }
 
+    /**
+     * @Route("/playlists/tri/{champ}/{ordre}", name="playlists.sort")
+     * @param string $champ
+     * @param string $ordre
+     * @return Response
+     */
     #[Route('/playlists/tri/{champ}/{ordre}', name: 'playlists.sort')]
     public function sort($champ, $ordre): Response{
         switch ($champ) {
@@ -81,7 +93,13 @@ class PlaylistsController extends AbstractController {
     }
 
 
-
+    /**
+     * @Route("/playlists/recherche/{champ}/{table}", name="playlists.findallcontain")
+     * @param string $champ
+     * @param Request $request
+     * @param string $table
+     * @return Response
+     */
     #[Route('/playlists/recherche/{champ}/{table}', name: 'playlists.findallcontain')]
     public function findAllContain($champ, Request $request, $table=""): Response{
         $valeur = $request->get("recherche");
@@ -99,7 +117,11 @@ class PlaylistsController extends AbstractController {
             'table' => $table
         ]);
     }
-
+    /**
+     * @Route("/playlists/playlist/{id}", name="playlists.showone")
+     * @param int $id
+     * @return Response
+     */
     #[Route('/playlists/playlist/{id}', name: 'playlists.showone')]
     public function showOne($id): Response{
         $playlist = $this->playlistRepository->find($id);

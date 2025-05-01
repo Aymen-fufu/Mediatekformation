@@ -138,6 +138,9 @@ class Formation
         return $this->categories;
     }
 
+    /**
+     * @param Collection<int, Categorie> $categories
+     */
     public function addCategory(Categorie $category): static
     {
         if (!$this->categories->contains($category)) {
@@ -147,6 +150,9 @@ class Formation
         return $this;
     }
 
+    /**
+     * @param Collection<int, Categorie> $categories
+     */
     public function removeCategory(Categorie $category): static
     {
         $this->categories->removeElement($category);

@@ -32,7 +32,6 @@ class AdminFormationController extends AbstractController
      * @var CategorieRepository
      */
 
-    private const RETOURNEPFORMATION = "admin/admin.formations.html.twig";
     private const RETOURNEADMINFORMATION = "admin.formations";
     private $categorieRepository;
 

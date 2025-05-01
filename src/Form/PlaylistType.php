@@ -11,6 +11,12 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Playlist;
 class PlaylistType extends AbstractType
 {
+    /**
+     * Build the form for creating or editing a Playlist.
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -30,6 +36,11 @@ class PlaylistType extends AbstractType
         ;
     }
 
+    /**
+     * Configure the options for this form.
+     *
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

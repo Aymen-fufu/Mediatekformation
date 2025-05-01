@@ -34,8 +34,8 @@ class AdminCategorieController extends AbstractController
 
     /**
      * Summary of __construct
-     * @param CategorieRepository $categorieRepository 
-     * @param FormationRepository $playlistRepository 
+     * @param CategorieRepository $categorieRepository
+     * @param FormationRepository $playlistRepository
      */
     public function __construct(CategorieRepository $categorieRepository, FormationRepository $playlistRepository)
     {

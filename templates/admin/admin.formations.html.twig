@@ -9,8 +9,8 @@
         <thead>
             <tr>
                 <th class="text-left align-top" scope="col">formation<br/>
-                    <a href="{{ path('admin.formations.sort', {champ:'title', ordre: 'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed ="true" ><</a>
-                    <a href="{{ path('admin.formations.sort', {champ:'title', ordre: 'DESC'}) }}"class="btn btn-info btn-sm active" role="button" aria-pressed ="true">></a>
+                    <button class="btn btn-info btn-sm active" aria-pressed="true" onclick="window.location.href='{{ path('admin.formations.sort', {champ:'title', ordre:'ASC'}) }}'"><</button>
+                    <button class="btn btn-info btn-sm active" aria-pressed="true" onclick="window.location.href='{{ path('admin.formations.sort', {champ:'title', ordre:'DESC'}) }}'">></button>
                     <form class="form-inline" action="{{ path('admin.formations.findallcontain',{champ:'title'}) }}" method="POST">
                         <div class="form-group" mr-1 mb-2>
                             <input type="text" class="sm" name="recherche" value="{% if valeur|default and not table|default %}{{ valeur }}{% endif %}">
@@ -20,8 +20,8 @@
                     </form>
                 </th>
                 <th class="text-left align-top" scope="col">Playlist<br/>
-                    <a href="{{ path('admin.formations.sort', {table:'playlist', champ:'name', ordre: 'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed ="true" ><</a>
-                    <a href="{{ path('admin.formations.sort', {table:'playlist', champ:'name', ordre: 'DESC'}) }}"class="btn btn-info btn-sm active" role="button" aria-pressed ="true">></a>
+                    <button class="btn btn-info btn-sm active" aria-pressed="true" onclick="window.location.href='{{ path('admin.formations.sort', {champ:'name', ordre:'ASC'}) }}'"><</button>
+                    <button class="btn btn-info btn-sm active" aria-pressed="true" onclick="window.location.href='{{ path('admin.formations.sort', {champ:'name', ordre:'DESC'}) }}'">></button>
                     <form class="form-inline" action="{{ path('admin.formations.findallcontain',{champ:'name', table:'playlist'}) }}" method="POST">
                         <div class="form-group" mr-1 mb-2>
                             <input type="text" class="sm" name="recherche" value="{% if valeur|default and not table|default %}{{ valeur }}{% endif %}">

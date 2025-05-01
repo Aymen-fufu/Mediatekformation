@@ -63,7 +63,7 @@ class AdminFormationController extends AbstractController
      * @Route("/admin/formations/ajouter", name="admin_formations_ajouter")
      * @return Response
      */
-    #[Route('/admin/formations/sort', name: 'admin.formations.sort')]
+    #[Route('/admin/formations/sort/{champ}/{ordre}/{table}', name: 'admin.formations.sort')]
     public function sort($champ, $ordre, $table=""): Response
     {
         $formations = $this->formationRepository->findAllOrderBy($champ, $ordre, $table);
@@ -93,11 +93,11 @@ class AdminFormationController extends AbstractController
     }
 
     /**
-     * @Route("/admin/formations/formation/{id}", name="admin.formations.add")
+     * @Route("/admin/formations/add", name="admin.formations.add")
      * @return Response
      * @param Request $request
      */
-    #[Route('/admin/formations/formation/add', name: 'admin.formations.add')]
+    #[Route('/admin/formations/add', name: 'admin.formations.add')]
     public function add(Request $request): Response
     {
         $formation = new Formation();
@@ -107,46 +107,54 @@ class AdminFormationController extends AbstractController
         if ($formFormation->isSubmitted() && $formFormation->isValid())
         {
             $this-> formationRepository->add($formation);
-            return $this->redirectToRoute(self::RETOURNEADMININFORMATION);
+            return $this->redirectToRoute(self::RETOURNEADMINFORMATION);
         }
-        return $this->render("admin/admin.formations.html.twig", [
+        $formations = $this->formationRepository->findAll();
+        $categories = $this->categorieRepository->findAll();
+        return $this->render("admin/admin.formation.add.html.twig", [
             'formation' => $formation,
+            'categories' => $categories,
+            'formations' => $formations,
             'formFormation' => $formFormation->createView()]);
     }
 
     /**
-     * @Route("/admin/formations/formation/modifier", name="admin.formations.edit")
+     * @Route("/admin/formations/formation/{id}/edit", name="admin.formations.edit")
      * @return Response
-     * @param Request $request 
+     * @param Request $request
      * @param int $id
      */
-    #[Route('/admin/formations/formation/edit', name: 'admin.formations.edit')]
-    public function edit(Request $request, Formation $formation): Response 
+#[Route('/admin/formations/formation/{id}/edit', name: 'admin.formations.edit')]
+    public function edit(Request $request, Formation $formation): Response
     {
         $formFormation = $this->createForm(FormationType::class, $formation);
         $formFormation->handleRequest($request);
 
-        if ($formFormation->isSubmitted() && $formFormation->isValid()) 
+        if ($formFormation->isSubmitted() && $formFormation->isValid())
         {
             $this->formationRepository->modify($formation,true);
-            return $this->redirectToRoute(self::RETOURNEADMININFORMATION);
+            return $this->redirectToRoute(self::RETOURNEADMINFORMATION);
         }
-        return $this->render("admin/admin.formations.html.twig", [
+        return $this->render("admin/formation.edit.twig", [
             'formation' => $formation,
             'formFormation' => $formFormation->createView()]);
     }
 
     /**
-     * @Route("/admin/formations/formation/{id}/supprimer", name="admin.formations.delete")
+     * @Route("/admin/formations/formation/{id}/delete", name="admin.formations.delete")
      * @return Response
-     * @param Request $request 
+     * @param Request $request
      * @param int $id
      */
     #[Route('/admin/formations/formation/{id}/delete', name: 'admin.formations.delete')]
     public function delete(Request $request, Formation $formation): Response
     {
+        if ($formation === null) {
+            throw new NotFoundHttpException('Formation non trouvée');
+        }
+        
         $this->formationRepository->remove($formation);
-        return $this->redirectToRoute(self::RETOURNEADMININFORMATION);
+        return $this->redirectToRoute(self::RETOURNEADMINFORMATION);
     }
 
 

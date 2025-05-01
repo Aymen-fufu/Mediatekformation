@@ -2,11 +2,13 @@
 
 namespace App\Form;
 
-use Doctrine\DBAL\Types\TextType;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Entity\Playlist;
 class PlaylistType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -22,9 +24,8 @@ class PlaylistType extends AbstractType
                 'required' => true,
             ])
 
-            ->add('submit', TextType::class, [
-                'label'=> 'Description de la playlist',
-                'required' => true,
+            ->add('submit', SubmitType::class, [
+                'label'=> 'Enregistrer'
                 ])
         ;
     }

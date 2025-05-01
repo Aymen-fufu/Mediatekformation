@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 /**
  * Class FormationType
@@ -32,7 +33,7 @@ class FormationType extends AbstractType
                 'label' => 'Description de la formation',
                 'required' => false
             ])
-            ->add ('publishedAt', TextType::class, [
+            ->add ('publishedAt', DateType::class, [
                 'widget' => 'single_text',
                 'data' => isset($options['data']) && $options['data'] ->getPublishedAt() != null ?
                     $options['data']->getPublishedAt() : new \DateTime('now'),
@@ -43,15 +44,15 @@ class FormationType extends AbstractType
                 'class' => Categorie::class,
                 'multiple' => true,
                 'required' => true,
-                'choice_label' => 'nom',
+                'choice_label' => 'name',
                 'label' => 'Catégorie de la formation'
             ])
             ->add('videoId')
             ->add('playlist', EntityType::class, [
                 'class' => Playlist::class,
                 'required' => false,
-                'multiple' => true,
-                'choice_label' => 'titre',
+                'multiple' => false,
+                'choice_label' => 'name',
                 'label' => 'Playlist de la formation'
             ])
             ->add('submit', SubmitType::class, [

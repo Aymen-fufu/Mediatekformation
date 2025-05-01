@@ -38,8 +38,8 @@ class AdminPlaylistController extends AbstractController
 
     /**
      * Summary of __construct
-     * @param PlaylistRepository $playlistRepository 
-     * @param CategorieRepository $categorieRepository 
+     * @param PlaylistRepository $playlistRepository
+     * @param CategorieRepository $categorieRepository
      */
     public function __construct( PlaylistRepository $playlistRepository, CategorieRepository $categorieRepository)
     {
@@ -65,11 +65,11 @@ class AdminPlaylistController extends AbstractController
     }
 
     /**
-     * @Route("/admin/playlists/ajouter", name="admin.playlists.sort")
+     * @Route("/admin/playlists/sort", name="admin.playlists.sort")
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/playlists/ajouter', name: 'admin.playlists.sort')]
+    #[Route('/admin/playlists/sort/{champ}/{ordre}', name: 'admin.playlists.sort')]
     public function sort($champ, $ordre): Response
     {
         switch ($champ) {
@@ -80,11 +80,13 @@ class AdminPlaylistController extends AbstractController
                 $playlists = $this->playlistRepository->findAllOrderByFormationCount($ordre);
                 break;
             default:
+                $playlists = $this->playlistRepository->findAll();
                 error_log("Erreur dans le tri des playlists");
                 break;
         }
+
         $categories = $this->categorieRepository->findAll();
-        return $this->render("admin/adminplaylists.html.twig", [
+        return $this->render("admin/admin.playlists.html.twig", [
             'playlists' => $playlists,
             'categories' => $categories
         ]);
@@ -106,7 +108,7 @@ class AdminPlaylistController extends AbstractController
         }
         $playlists = $this->playlistRepository->findAllContain($champ, $valeur, $table);
         $categories = $this->categorieRepository->findAll();
-        return $this->render("admin/adminplaylists.html.twig", [
+        return $this->render("admin/admin.playlists.html.twig", [
             'playlists' => $playlists,
             'categories' => $categories,
             'valeur' => $valeur,
@@ -128,11 +130,15 @@ class AdminPlaylistController extends AbstractController
 
         if ($formPlaylist->isSubmitted() && $formPlaylist->isValid()) 
         {
-            $this->playlistRepository->save($playlist);
+            $this->playlistRepository->add($playlist);
             return $this->redirectToRoute(self::RETOURNEADMINPLAYLIST);
         }
-        return $this->render("admin/adminplaylists.html.twig", [
+        $categories = $this->categorieRepository->findAll();
+        $playlists = $this->playlistRepository->findAll();
+        return $this->render("admin/admin.playlist.add.html.twig", [
             'playlist' => $playlist,
+            'categories' => $categories,
+            'playlists' => $playlists,
             'formPlaylist' => $formPlaylist->createView()
         ]);
     }
@@ -154,7 +160,7 @@ class AdminPlaylistController extends AbstractController
             $this->playlistRepository->modify($playlist,true);
             return $this->redirectToRoute(self::RETOURNEADMINPLAYLIST);
         }
-        return $this->render("admin/adminplaylists.html.twig", [
+        return $this->render("admin/admin.playlists.html.twig", [
             'playlist' => $playlist,
             'formPlaylist' => $formPlaylist->createView()
         ]);

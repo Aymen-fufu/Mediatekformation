@@ -160,7 +160,7 @@ class AdminPlaylistController extends AbstractController
             $this->playlistRepository->modify($playlist,true);
             return $this->redirectToRoute(self::RETOURNEADMINPLAYLIST);
         }
-        return $this->render("admin/admin.playlists.html.twig", [
+        return $this->render("admin/admin.playlist.edit.html.twig", [
             'playlist' => $playlist,
             'formPlaylist' => $formPlaylist->createView()
         ]);

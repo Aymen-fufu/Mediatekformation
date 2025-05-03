@@ -134,7 +134,7 @@ class AdminFormationController extends AbstractController
             $this->formationRepository->modify($formation,true);
             return $this->redirectToRoute(self::RETOURNEADMINFORMATION);
         }
-        return $this->render("admin/formation.edit.twig", [
+        return $this->render("admin/admin.formation.edit.html.twig", [
             'formation' => $formation,
             'formFormation' => $formFormation->createView()]);
     }
